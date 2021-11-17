@@ -18,7 +18,7 @@
 }
 
 .container .box {
-  height: 250px;
+  height: 200px;
   border-radius: 10px;
   border: 2px solid #000;
   overflow: hidden;
@@ -121,6 +121,27 @@
 
 .backdrop .modal {
   width: 90%;
+  color: white;
+  font-weight: bold;
+  position: relative;
+}
+
+.backdrop .modal .left,
+.backdrop .modal .right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.backdrop .modal .left {
+  left: 1rem;
+}
+
+.backdrop .modal .right {
+  right: 1rem;
 }
 
 .open {
@@ -133,9 +154,33 @@
   top: 1rem;
   cursor: pointer;
 }
-
 .backdrop .modal img {
   width: 100%;
+}
+
+.backdrop .modal .left,
+.backdrop .modal .right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.backdrop .modal .left {
+  left: 1rem;
+}
+
+.backdrop .modal .right {
+  right: 1rem;
+}
+
+.form .ner {
+  border-radius: 100px;
+  border: 1px solid rgb(174, 103, 241);
+  margin: 0 1rem;
+  padding: 10px 1rem;
 }
 
 @media (min-width: 576px) {
