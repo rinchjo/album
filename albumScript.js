@@ -44,10 +44,7 @@ function updateUI() {
   input.value = '';
   ner.value = ''
 }
-function insertItems() {
-  backdrop.children[0].children[1].src = images[openIndec].zurag;
-  backdrop.children[0].children[0].innerHTML = images[openIndec].ner;
-}
+
 
 document.addEventListener('click', function (e) {
   if (e.target.id === "delete") {
@@ -62,23 +59,42 @@ document.addEventListener('click', function (e) {
     backdrop.children[0].children[0].innerHTML = images[openIndec].ner;
 
   }
-
   if (e.target.id === 'right') {
     openIndec++;
     if (openIndec === images.length) {
       openIndec = 0;
     }
-    insertItems();
+
+    backdrop.children[0].children[1].src = images[openIndec].zurag;
+    backdrop.children[0].children[0].innerHTML = images[openIndec].ner;
   }
   if (e.target.id === 'left') {
     openIndec--;
     if (openIndec < 0) {
-      openIndec = images.length[0];
+      openIndec = images.length - 1;
     }
-    insertItems();
+
+    backdrop.children[0].children[1].src = images[openIndec].zurag;
+    backdrop.children[0].children[0].innerHTML = images[openIndec].ner;
   }
 
   if (e.target.classList.contains('open')) {
     backdrop.classList.remove('open');
+  }
+})
+document.addEventListener('keydown', (e) => {
+  if (e.keycode === 39) {
+    openIndec++;
+    if (openIndec === images.length) {
+      openIndec = 0;
+    }
+  }
+})
+document.addEventListener('keydown', (e) => {
+  if (e.keycode === 37) {
+    openIndec--;
+    if (openIndec < 0) {
+      openIndec = images.length - 1;
+    }
   }
 })
