@@ -1,49 +1,84 @@
-const container = document.querySelector(".container #container");
-const input = document.querySelector('input[type="text"]');
-const btn = document.querySelector('input[type="button"]');
-const backdrop = document.querySelector(".backdrop");
-const picture = document.querySelector(".picture");
-
+const container = document.querySelector('.container #container');
+const input = document.querySelector('.imgInput')
+const ner = document.querySelector('.ner')
+const btn = document.querySelector('input[type="button"]')
+const backdrop = document.querySelector('.backdrop');
+const names = document.querySelector('#name')
+const left = document.querySelector('#left')
+const right = document.querySelector('#right')
 const images = [];
+let openIndec;
+/**
+ * 
+ * {
+ *    ner: "Max",
+ *    zurag: "https://photo.jpg"
+ * }
+ * 
+ */
 
-btn.addEventListener("click", function () {
-  images.push(input.value);
-  updateUI();
-});
+btn.addEventListener('click', function () {
+  if (input.value.trim() !== '' && ner.value.trim() !== "") {
+    images.push({
+      zurag: input.value,
+      ner: ner.value
+    })
+    updateUI()
+  } else {
+    alert('Өгөгдөл дутуу байна')
+  }
+})
 
 function updateUI() {
-  container.innerHTML = "";
-  images.forEach(function (img, index) {
-    picture.src = img;
-    container.insertAdjacentHTML(
-      "beforeend",
-      `
+  container.innerHTML = '';
+  images.forEach(function (object, index) {
+    container.insertAdjacentHTML('beforeend', `
             <div id="zurag-${index}" class="box">
-                <img src=${img} alt="">
+                <img src=${object.zurag} alt="">
                 <div class="delete">
                     <i id="delete" class="fas fa-times"></i>
                 </div>
             </div>
-        `
-    );
-  });
-  input.value = "";
+        `)
+  })
+  input.value = '';
+  ner.value = ''
+}
+function insertItems() {
+  backdrop.children[0].children[1].src = images[openIndec].zurag;
+  backdrop.children[0].children[0].innerHTML = images[openIndec].ner;
 }
 
-document.addEventListener("click", function (e) {
+document.addEventListener('click', function (e) {
   if (e.target.id === "delete") {
-    const deleteIndex = +e.target.parentNode.parentNode.id.split("-")[1];
-    images.splice(deleteIndex, 1);
-    updateUI();
+    const deleteIndex = +e.target.parentNode.parentNode.id.split('-')[1];
+    images.splice(deleteIndex, 1)
+    updateUI()
   }
-  if (e.target.classList.contains("box")) {
-    const openIndec = +e.target.id.split("-")[1];
-    backdrop.classList.add("open");
-  }
-});
+  if (e.target.classList.contains('box')) {
+    openIndec = +e.target.id.split('-')[1];
+    backdrop.classList.add('open');
+    backdrop.children[0].children[1].src = images[openIndec].zurag;
+    backdrop.children[0].children[0].innerHTML = images[openIndec].ner;
 
-document.addEventListener("click", (e) => {
-  if (e.target.id === "close" || e.target.classList.contains("backdrop")) {
-    backdrop.classList.remove("open");
   }
-});
+
+  if (e.target.id === 'right') {
+    openIndec++;
+    if (openIndec === images.length) {
+      openIndec = 0;
+    }
+    insertItems();
+  }
+  if (e.target.id === 'left') {
+    openIndec--;
+    if (openIndec < 0) {
+      openIndec = images.length[0];
+    }
+    insertItems();
+  }
+
+  if (e.target.classList.contains('open')) {
+    backdrop.classList.remove('open');
+  }
+})
